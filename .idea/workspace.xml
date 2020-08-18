@@ -22,7 +22,49 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
   </component>
-  <component name="RunManager" selected="Python.TestUtilities">
+  <component name="RunManager" selected="Python.TestPeakExtractor">
+    <configuration name="TestPeakExtractor" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Quad" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test/TestCore" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test/TestCore/TestPeakExtractor.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSpectrogramSTFT" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Quad" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test/TestCore" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test/TestCore/TestSpectrogramSTFT.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestUtilities" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Quad" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -67,6 +109,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.TestPeakExtractor" />
+        <item itemvalue="Python.TestSpectrogramSTFT" />
         <item itemvalue="Python.TestUtilities" />
       </list>
     </recent_temporary>
@@ -83,22 +127,22 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1278" height="193" key="GridCell.Tab.0.bottom" timestamp="1597773411075">
+    <state width="1278" height="193" key="GridCell.Tab.0.bottom" timestamp="1597779807049">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1597773411075" />
-    <state width="1278" height="193" key="GridCell.Tab.0.center" timestamp="1597773411066">
+    <state width="1278" height="193" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1597779807049" />
+    <state width="1278" height="193" key="GridCell.Tab.0.center" timestamp="1597779807048">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1597773411066" />
-    <state width="1278" height="193" key="GridCell.Tab.0.left" timestamp="1597773411065">
+    <state width="1278" height="193" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1597779807048" />
+    <state width="1278" height="193" key="GridCell.Tab.0.left" timestamp="1597779807047">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1597773411065" />
-    <state width="1278" height="193" key="GridCell.Tab.0.right" timestamp="1597773411068">
+    <state width="1278" height="193" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1597779807047" />
+    <state width="1278" height="193" key="GridCell.Tab.0.right" timestamp="1597779807048">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1597773411068" />
+    <state width="1278" height="193" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1597779807048" />
     <state x="406" y="121" width="618" height="522" key="find.popup" timestamp="1597770905928">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
