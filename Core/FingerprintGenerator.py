@@ -53,9 +53,9 @@ class FingerprintGenerator(object):
             all_quads = list(combinations(target_zone, 3))
             # validate quads formed form a given target zone and identify the valid ones
             if len(all_quads) > 0:
-                __validate_quads__(root_peak=i, all_triplets=all_quads, valid_triplets=valid_quads)
+                __validate_quads__(root_peak=i, all_quads=all_quads, valid_quads=valid_quads)
             if len(valid_quads) > 0:
-                self.__hash_quads__(root_peak=i, valid_triplets=valid_quads,
+                self.__hash_quads__(root_peak=i, valid_quads=valid_quads,
                                     audio_fingerprints=audio_fingerprints)
         return audio_fingerprints
 
