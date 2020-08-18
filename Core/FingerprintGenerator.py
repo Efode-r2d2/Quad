@@ -29,7 +29,7 @@ def __validate_quads__(root_peak, all_quads, valid_quads):
             valid_quads.append(i)
 
 
-class Fingerprint(object):
+class FingerprintGenerator(object):
     def __init__(self, frames_per_second=219, target_zone_width=1, target_zone_center=4, tolerance=0.31):
         self.frames_per_second = frames_per_second
         self.target_zone_width = target_zone_width
