@@ -30,21 +30,21 @@ def get_rtree_index(rtree_path):
     return file_idx
 
 
-def insert_node(rtree_index, node_id, geo_hash):
+def insert_node(rtree_index, node_id, hashes):
     """
 
     :param rtree_index:
     :param node_id:
-    :param geo_hash:
+    :param hashes:
     """
-    rtree_index.insert(node_id, (geo_hash[0], geo_hash[1], geo_hash[0], geo_hash[1]))
+    rtree_index.insert(node_id, (hashes[0], hashes[1], hashes[2], hashes[3]))
 
 
-def get_nearest_node(rtree_index, geo_hash):
+def get_nearest_node(rtree_index, hashes):
     """
 
     :param rtree_index:
-    :param geo_hash:
+    :param hashes:
     :return:
     """
-    return list(rtree_index.nearest((geo_hash[0], geo_hash[1], geo_hash[0], geo_hash[1]), 5))
+    return list(rtree_index.nearest((hashes[0], hashes[1], hashes[2], hashes[3]), 5))

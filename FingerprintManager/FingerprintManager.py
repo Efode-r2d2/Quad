@@ -43,7 +43,7 @@ class FingerprintManager(object):
 
         for i in audio_fingerprints:
             row = [audio_id] + i[1]
-            RTreeManager.insert_node(rtree_index=self.r_tree_index, node_id=node_id, geo_hash=i[0])
+            RTreeManager.insert_node(rtree_index=self.r_tree_index, node_id=node_id, hashes=i[0])
             RawDataManager.insert_data(shelf=self.shelf_index, key=node_id, value=row)
             node_id += 1
         # updating the last node_id
