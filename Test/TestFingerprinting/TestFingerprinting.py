@@ -24,7 +24,7 @@ fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_ce
 # Fingerprint Manager Object
 fingerprint_manager = FingerprintManager(r_tree=r_tree, shelf=shelf, config=config)
 # fingerprinting all reference audios
-for i in reference_audios[0:2]:
+for i in reference_audios[0:10]:
     # audio_id
     audio_id = i.split("/")[5].split(".")[0]
     # reading time series audio data sampled at 7KHz

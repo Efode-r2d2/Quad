@@ -9,12 +9,12 @@ from DataManager import RTreeManager
 from DataManager import RawDataManager
 
 # query audios source directory
-src_dir = "../../../Test_Data/Reference_Audios/"
+src_dir = "../../../Test_Data/Modified_Audios/Speed_Change/100/"
 # find all query audios under specified directory
-query_audios = DirManager.find_mp3_files(src_dir=src_dir)
-r_tree = "../../../Hashes/Quad/Test"
+query_audios = DirManager.find_wav_files(src_dir=src_dir)
+r_tree = "../../../Hashes/Quad/Test_1"
 # raw_data_path
-shelf = "../../../Raw_Data/Quad/Test"
+shelf = "../../../Raw_Data/Quad/Test_1"
 # r_tree index
 r_tree_index = RTreeManager.get_rtree_index(rtree_path=r_tree)
 # raw data index
@@ -36,10 +36,10 @@ peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=7
     spectral peaks extracted from STFT based spectrogram of an audio and it will return audio 
     fingerprints generated using the association of four spectral peaks.
 '''
-fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_center=2, tolerance=0.0)
+fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_center=2, tolerance=0.31)
 
 for i in query_audios:
-    audio_data = AudioManager.load_audio(audio_path=i)
+    audio_data = AudioManager.load_audio(audio_path=i, offset=0.0, duration=5.0)
     spectrogram = stft.compute_stft_magnitude_in_db(audio_data=audio_data)
     spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
     audio_fingerprints = fingerprint_generator.__generate_fingerprints__(spectral_peaks=spectral_peaks[0])
@@ -47,6 +47,6 @@ for i in query_audios:
     match_in_bins = MatchFingerprints.match_fingerprints(raw_data_index=raw_data_index,
                                                          rtree_index=r_tree_index,
                                                          fingerprints=audio_fingerprints,
-                                                         tolerance=0.31)
+                                                         tolerance=0.0)
     match = VerifyMatches.verify_matches(matches_in_bins=match_in_bins)
     print(i, match)
