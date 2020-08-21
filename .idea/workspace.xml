@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="384e54e9-e4a0-48dc-9699-9c84c7a4c2af" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Test/TestDataManager/TestDataManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataManager/DataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/DataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestDataManager/TestDataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/TestDataManager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +31,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
-  <component name="RunManager" selected="Python.TestDataManager">
+  <component name="RunManager" selected="Python.TestDataManagerStore">
     <configuration name="TestConfig" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Quad" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -54,7 +53,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TestDataManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="TestDataManagerStore" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Quad" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -66,7 +65,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test/TestDataManager/TestDataManager.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerStore.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,7 +160,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.TestDataManager" />
+        <item itemvalue="Python.TestDataManagerStore" />
         <item itemvalue="Python.TestFingerprintMatching" />
         <item itemvalue="Python.TestFingerprinting" />
         <item itemvalue="Python.TestConfig" />
@@ -185,22 +184,22 @@
       <screen x="65" y="24" width="1301" height="744" />
     </state>
     <state x="456" y="236" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/65.24.1301.744@65.24.1301.744" timestamp="1597958128714" />
-    <state width="1278" height="193" key="GridCell.Tab.0.bottom" timestamp="1597962574805">
+    <state width="1278" height="193" key="GridCell.Tab.0.bottom" timestamp="1598031365173">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1597962574805" />
-    <state width="1278" height="193" key="GridCell.Tab.0.center" timestamp="1597962574804">
+    <state width="1278" height="193" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1598031365173" />
+    <state width="1278" height="193" key="GridCell.Tab.0.center" timestamp="1598031365172">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1597962574804" />
-    <state width="1278" height="193" key="GridCell.Tab.0.left" timestamp="1597962574804">
+    <state width="1278" height="193" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1598031365172" />
+    <state width="1278" height="193" key="GridCell.Tab.0.left" timestamp="1598031365171">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1597962574804" />
-    <state width="1278" height="193" key="GridCell.Tab.0.right" timestamp="1597962574805">
+    <state width="1278" height="193" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1598031365171" />
+    <state width="1278" height="193" key="GridCell.Tab.0.right" timestamp="1598031365172">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1597962574805" />
+    <state width="1278" height="193" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1598031365172" />
     <state x="406" y="121" width="618" height="522" key="find.popup" timestamp="1597770905928">
       <screen x="65" y="24" width="1301" height="744" />
     </state>

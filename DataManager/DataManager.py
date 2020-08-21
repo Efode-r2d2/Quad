@@ -74,7 +74,7 @@ class DataManager(object):
         conn.close()
 
     def __store__(self, fingerprints, title):
-        with sqlite3.connect(self.path) as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             if not __record_exists__(cursor=cursor, title=title):
                 record_id = __store_record__(cursor=cursor, title=title)
