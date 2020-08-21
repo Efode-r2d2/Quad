@@ -30,8 +30,6 @@ def __create_tables__(conn):
                     hashid INTEGER PRIMARY KEY,
                     recordid INTEGER,
                     Ax INTEGER, Ay INTEGER,
-                    Cx INTEGER, Cy INTEGER,
-                    Dx INTEGER, Dy INTEGER,
                     Bx INTEGER, By INTEGER,
                     FOREIGN KEY(hashid) REFERENCES Hashes(id),
                     FOREIGN KEY(recordid) REFERENCES Records(id));
@@ -66,6 +64,31 @@ def __store_hash__(cursor, hash):
                    (hash[0], hash[0], hash[1], hash[1], hash[2], hash[2], hash[3], hash[3]))
 
 
+def __radius_nn__(cursor, hash, e=0.01):
+    """
+    Epsilon (e) neighbor search for a given hash. Matching hash ids
+    can be retrieved from the cursor.
+    """
+    cursor.execute("""SELECT id FROM Hashes
+                  WHERE minNewCx >= ? AND maxNewCx <= ?
+                    AND minNewCy >= ? AND maxNewCy <= ?
+                    AND minNewDx >= ? AND maxNewDx <= ?
+                    AND minNewDy >= ? AND maxNewDy <= ?""",
+                   (hash[0] - e, hash[0] + e,
+                    hash[1] - e, hash[1] + e,
+                    hash[2] - e, hash[2] + e,
+                    hash[3] - e, hash[3] + e))
+    for j in cursor:
+        print(j)
+
+
+def __store_quad__(cursor, quad, record_id):
+    hash_id = cursor.lastrowid
+    values = (hash_id, record_id, quad[0], quad[1], quad[2], quad[3])
+    cursor.execute("""INSERT INTO Quads
+                         VALUES (?,?,?,?,?,?)""", values)
+
+
 class DataManager(object):
     def __init__(self, db_path):
         self.db_path = db_path
@@ -78,15 +101,23 @@ class DataManager(object):
             cursor = conn.cursor()
             if not __record_exists__(cursor=cursor, title=title):
                 record_id = __store_record__(cursor=cursor, title=title)
-                # self._store_peaks(c, fp, recordid)
+                # self._store_peaks(c, fp, record_id)
                 for i in fingerprints:
                     __store_hash__(cursor=cursor, hash=i[0])
-                    #self._store_quad(cursor=cursor, quad=i[1], record_id=record_id)
+                    __store_quad__(cursor=cursor, quad=i[1], record_id=record_id)
         conn.commit()
         conn.close()
 
     def __store_peak__(self, cursor, fingerprint, record_id):
         pass
 
-    def __store_quad__(self, cursor, quad, record_id):
-        pass
+    def __query__(self, audio_fingerprints, vThreshold=0.5):
+        match_candidates = self.__find_match_candidates__(audio_fingerprints)
+
+    def __find_match_candidates__(self, audio_fingerprints):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        for i in audio_fingerprints:
+            __radius_nn__(cursor, i[0])
+        cursor.close()
+        conn.close()
