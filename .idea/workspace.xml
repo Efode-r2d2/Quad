@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataManager/DataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/DataManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerQuery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerQuery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerStore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerStore.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +32,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
-  <component name="RunManager" selected="Python.TestDataManagerQuery">
+  <component name="RunManager" selected="Python.TestDataManagerStore">
     <configuration name="TestConfig" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Quad" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -160,8 +161,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.TestDataManagerQuery" />
         <item itemvalue="Python.TestDataManagerStore" />
+        <item itemvalue="Python.TestDataManagerQuery" />
         <item itemvalue="Python.TestFingerprintMatching" />
         <item itemvalue="Python.TestFingerprinting" />
         <item itemvalue="Python.TestConfig" />
@@ -184,22 +185,22 @@
       <screen x="65" y="24" width="1301" height="744" />
     </state>
     <state x="456" y="236" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/65.24.1301.744@65.24.1301.744" timestamp="1597958128714" />
-    <state width="1278" height="193" key="GridCell.Tab.0.bottom" timestamp="1598040939931">
+    <state width="1278" height="193" key="GridCell.Tab.0.bottom" timestamp="1598053578403">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1598040939931" />
-    <state width="1278" height="193" key="GridCell.Tab.0.center" timestamp="1598040939930">
+    <state width="1278" height="193" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1598053578403" />
+    <state width="1278" height="193" key="GridCell.Tab.0.center" timestamp="1598053578400">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1598040939930" />
-    <state width="1278" height="193" key="GridCell.Tab.0.left" timestamp="1598040939929">
+    <state width="1278" height="193" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1598053578400" />
+    <state width="1278" height="193" key="GridCell.Tab.0.left" timestamp="1598053578399">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1598040939929" />
-    <state width="1278" height="193" key="GridCell.Tab.0.right" timestamp="1598040939930">
+    <state width="1278" height="193" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1598053578399" />
+    <state width="1278" height="193" key="GridCell.Tab.0.right" timestamp="1598053578402">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="193" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1598040939930" />
+    <state width="1278" height="193" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1598053578402" />
     <state x="406" y="121" width="618" height="522" key="find.popup" timestamp="1597770905928">
       <screen x="65" y="24" width="1301" height="744" />
     </state>

@@ -6,7 +6,7 @@ from Core import FingerprintGenerator
 from DataManager import DataManager
 
 # source directory for query audios
-src_dir = "../../../Test_Data/Modified_Audios/Speed_Change/80"
+src_dir = "../../../Test_Data/Modified_Audios/Speed_Change/100"
 # retrieving all query audios under specified directory
 query_audios = DirManager.find_wav_files(src_dir=src_dir)
 # loading a time series audio data from one of the query audio

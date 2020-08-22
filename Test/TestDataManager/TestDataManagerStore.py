@@ -26,4 +26,4 @@ audio_fingerprints = fingerprint_generator.__generate_fingerprints__(spectral_pe
 # Data manager object
 data_manager = DataManager("../../../Hashes/Quad/Quad.db")
 # storing fingerprints
-data_manager.__store__(fingerprints=audio_fingerprints, title="Audio1")
+data_manager.__store__(fingerprints=audio_fingerprints, spectral_peaks=spectral_peaks[0], title="Audio1")
