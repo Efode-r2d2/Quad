@@ -20,7 +20,7 @@ data_manager = DataManager("../../../Hashes/Quad/Quad.db")
 for i in reference_audios:
     audio_title = i.split("/")[5].split(".")[0]
     # loading time series audio data of one of reference audio
-    audio_data = audio_manager.load_audio(audio_path=i, sampling_rate=7000)
+    audio_data = audio_manager.load_audio(audio_path=i, sr=7000)
     # computing the spectrogram of time series audio data
     spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
     # extracting spectral peaks from STFT based spectrogram

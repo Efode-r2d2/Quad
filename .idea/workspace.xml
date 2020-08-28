@@ -3,16 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="384e54e9-e4a0-48dc-9699-9c84c7a4c2af" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/spectrogram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core/spectrogram.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintManager/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/data_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintManager/fingerprint_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/peak_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core/peak_extractor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestCore/test_peak_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_peak_extractor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestCore/test_spectrogram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_spectrogram.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestUtilities/test_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestUtilities/test_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utilities/audio_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utilities/audio_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,22 +195,22 @@
       <screen x="65" y="24" width="1301" height="744" />
     </state>
     <state x="456" y="236" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/65.24.1301.744@65.24.1301.744" timestamp="1597958128714" />
-    <state width="1278" height="268" key="GridCell.Tab.0.bottom" timestamp="1598641304378">
+    <state width="1278" height="268" key="GridCell.Tab.0.bottom" timestamp="1598642712647">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="268" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1598641304378" />
-    <state width="1278" height="268" key="GridCell.Tab.0.center" timestamp="1598641304376">
+    <state width="1278" height="268" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1598642712647" />
+    <state width="1278" height="268" key="GridCell.Tab.0.center" timestamp="1598642712643">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="268" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1598641304376" />
-    <state width="1278" height="268" key="GridCell.Tab.0.left" timestamp="1598641304375">
+    <state width="1278" height="268" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1598642712643" />
+    <state width="1278" height="268" key="GridCell.Tab.0.left" timestamp="1598642712642">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="268" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1598641304375" />
-    <state width="1278" height="268" key="GridCell.Tab.0.right" timestamp="1598641304377">
+    <state width="1278" height="268" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1598642712642" />
+    <state width="1278" height="268" key="GridCell.Tab.0.right" timestamp="1598642712645">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="268" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1598641304377" />
+    <state width="1278" height="268" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1598642712645" />
     <state x="406" y="121" width="618" height="522" key="find.popup" timestamp="1597770905928">
       <screen x="65" y="24" width="1301" height="744" />
     </state>

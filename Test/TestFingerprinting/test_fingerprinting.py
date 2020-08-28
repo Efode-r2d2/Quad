@@ -28,7 +28,7 @@ for i in reference_audios[0:10]:
     # audio_id
     audio_id = i.split("/")[5].split(".")[0]
     # reading time series audio data sampled at 7KHz
-    audio_data = audio_manager.load_audio(audio_path=i, sampling_rate=7000)
+    audio_data = audio_manager.load_audio(audio_path=i, sr=7000)
     # computing stft based spectrogram
     spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
     # extracting spectral peaks from respective spectrogram

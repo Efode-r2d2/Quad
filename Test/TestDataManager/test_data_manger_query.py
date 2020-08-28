@@ -28,7 +28,7 @@ for t in range(5, 35, 5):
         # loading a time series audio data from one of the query audio
         start = time.time()
         audio_data = audio_manager.load_audio(audio_path=i,
-                                              sampling_rate=7000,
+                                              sr=7000,
                                               offset=10.0,
                                               duration=t)
         # computing stft based spectrogram of time series audio data

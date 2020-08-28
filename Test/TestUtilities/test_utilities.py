@@ -9,7 +9,7 @@ mp3_files = dir_manager.find_mp3_files(src_dir=src_dir)
 for i in mp3_files:
     print(i)
 # load audio data with sampling rate of 7KHz and
-audio_data = audio_manager.load_audio(audio_path=mp3_files[1], sampling_rate=7000, offset=10.0, duration=10.0)
+audio_data = audio_manager.load_audio(audio_path=mp3_files[1], sr=7000, offset=10.0, duration=10.0)
 print("Time Series Audio Data")
 for i in audio_data:
     print(i)
