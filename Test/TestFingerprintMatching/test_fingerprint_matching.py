@@ -40,7 +40,7 @@ fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_ce
 
 for i in query_audios:
     audio_data = audio_manager.load_audio(audio_path=i, offset=0.0, duration=5.0)
-    spectrogram = stft.compute_stft_magnitude_in_db(audio_data=audio_data)
+    spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
     spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
     audio_fingerprints = fingerprint_generator.__generate_fingerprints__(spectral_peaks=spectral_peaks[0])
     # print(audio_fingerprints)

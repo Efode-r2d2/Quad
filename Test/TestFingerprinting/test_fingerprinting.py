@@ -30,7 +30,7 @@ for i in reference_audios[0:10]:
     # reading time series audio data sampled at 7KHz
     audio_data = audio_manager.load_audio(audio_path=i, sampling_rate=7000)
     # computing stft based spectrogram
-    spectrogram = stft.compute_stft_magnitude_in_db(audio_data=audio_data)
+    spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
     # extracting spectral peaks from respective spectrogram
     spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
     # generating audio fingerprints

@@ -15,7 +15,7 @@ stft = Spectrogram(n_fft=1024, hop_length=32, sr=700)
 peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=75)
 # an object to generate quad based audio fingerprints
 fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_center=2, tolerance=0.31)
-# DataManager object
+# FingerprintManager object
 data_manager = DataManager(db_path="../../../Hashes/Quad/Quad.db")
 # results path
 result_path = "../../../Results_2/Quad/Granularity/"
@@ -32,7 +32,7 @@ for t in range(5, 35, 5):
                                               offset=10.0,
                                               duration=t)
         # computing stft based spectrogram of time series audio data
-        spectrogram = stft.compute_stft_magnitude_in_db(audio_data=audio_data)
+        spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
         # extracting spectral peaks from STFT based spectrogram
         spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
         # generate quad based fingerprints
