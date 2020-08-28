@@ -15,9 +15,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from ConfigManager import ConfigManager
+from ConfigManager import config_manager
 
 config_path = "../../Config/Config_Quad.ini"
-config = ConfigManager.write_config(config_file_path=config_path,
-                                    section="Default",
-                                    sub_section="Node_ID", value=0)
+config = config_manager.write_config(config_file_path=config_path,
+                                     section="Default",
+                                     sub_section="Node_ID", value=0)

@@ -1,3 +1,3 @@
-from FingerprintMatching import MatchFingerprints
-from FingerprintMatching import VerifyMatches
-from FingerprintMatching.Match import Match
+from FingerprintMatching import match_fingerprints
+from FingerprintMatching import verify_matches
+from FingerprintMatching.match import Match

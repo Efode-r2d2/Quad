@@ -1,5 +1,5 @@
-from Utilities import DirManager
-from Utilities import AudioManager
+from Utilities import dir_manager
+from Utilities import audio_manager
 from Core import STFT
 from Core import PeakExtractor
 from Core import FingerprintGenerator
@@ -20,17 +20,17 @@ data_manager = DataManager(db_path="../../../Hashes/Quad/Quad.db")
 # results path
 result_path = "../../../Results_2/Quad/Granularity/"
 for t in range(5, 35, 5):
-    query_audios = DirManager.find_wav_files(src_dir=src_dir)
-    DirManager.create_dir(result_path)
+    query_audios = dir_manager.find_wav_files(src_dir=src_dir)
+    dir_manager.create_dir(result_path)
     count = 901
     for i in query_audios:
         audio_id = i.split("/")[7].split(".")[0]
         # loading a time series audio data from one of the query audio
         start = time.time()
-        audio_data = AudioManager.load_audio(audio_path=i,
-                                             sampling_rate=7000,
-                                             offset=10.0,
-                                             duration=t)
+        audio_data = audio_manager.load_audio(audio_path=i,
+                                              sampling_rate=7000,
+                                              offset=10.0,
+                                              duration=t)
         # computing stft based spectrogram of time series audio data
         spectrogram = stft.compute_stft_magnitude_in_db(audio_data=audio_data)
         # extracting spectral peaks from STFT based spectrogram

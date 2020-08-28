@@ -16,8 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import threading
-from DataManager import RTreeManager
-from DataManager import RawDataManager
+from DataManager import r_tree_manager
+from DataManager import raw_data_manager
 import numpy as np
 
 
@@ -35,9 +35,9 @@ class Match(threading.Thread):
             min_f_delta = 1 / (1 + tolerance)
             max_f_delta = 1 / (1 - tolerance)
 
-            candidate_matches = RTreeManager.get_nearest_node(rtree_index, i[0])
+            candidate_matches = r_tree_manager.get_nearest_node(rtree_index, i[0])
             for m in candidate_matches:
-                raw_data = RawDataManager.get_data(shelf=raw_data_index, key=m)
+                raw_data = raw_data_manager.get_data(shelf=raw_data_index, key=m)
                 p1x_r = raw_data[1]
                 p1y_r = raw_data[2]
                 p2x_r = raw_data[3]

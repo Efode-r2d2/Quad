@@ -17,7 +17,7 @@
 """
 from collections import defaultdict
 
-from FingerprintMatching.Match import Match
+from FingerprintMatching.match import Match
 
 
 def divide_chunks(l, n):

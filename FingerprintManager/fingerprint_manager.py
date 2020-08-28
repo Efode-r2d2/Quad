@@ -15,9 +15,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from ConfigManager import ConfigManager
-from DataManager import RawDataManager
-from DataManager import RTreeManager
+from ConfigManager import config_manager
+from DataManager import raw_data_manager
+from DataManager import r_tree_manager
 
 
 class FingerprintManager(object):
@@ -26,9 +26,9 @@ class FingerprintManager(object):
         self.shelf = shelf
         self.config = config
         # r tree index
-        self.r_tree_index = RTreeManager.get_rtree_index(rtree_path=self.r_tree)
+        self.r_tree_index = r_tree_manager.get_rtree_index(rtree_path=self.r_tree)
         # shelf index
-        self.shelf_index = RawDataManager.get_shelf_file_index(shelf_path=self.shelf)
+        self.shelf_index = raw_data_manager.get_shelf_file_index(shelf_path=self.shelf)
 
     def __store_fingerprints__(self, audio_fingerprints, audio_id):
         """
@@ -37,17 +37,17 @@ class FingerprintManager(object):
         :return:
         """
         # node_id is used to identify each entry of the r_tree
-        node_id = int(ConfigManager.read_config(config_file_path=self.config,
-                                                section="Default",
-                                                sub_section="Node_ID"))
+        node_id = int(config_manager.read_config(config_file_path=self.config,
+                                                 section="Default",
+                                                 sub_section="Node_ID"))
 
         for i in audio_fingerprints:
             row = [audio_id] + i[1]
-            RTreeManager.insert_node(rtree_index=self.r_tree_index, node_id=node_id, hashes=i[0])
-            RawDataManager.insert_data(shelf=self.shelf_index, key=node_id, value=row)
+            r_tree_manager.insert_node(rtree_index=self.r_tree_index, node_id=node_id, hashes=i[0])
+            raw_data_manager.insert_data(shelf=self.shelf_index, key=node_id, value=row)
             node_id += 1
         # updating the last node_id
-        ConfigManager.write_config(config_file_path=self.config,
-                                   section="Default",
-                                   sub_section="Node_ID",
-                                   value=str(node_id))
+        config_manager.write_config(config_file_path=self.config,
+                                    section="Default",
+                                    sub_section="Node_ID",
+                                    value=str(node_id))

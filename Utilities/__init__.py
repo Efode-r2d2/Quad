@@ -15,6 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from Utilities import AudioManager
-from Utilities import DirManager
-from Utilities import GraphManager
+from Utilities import audio_manager
+from Utilities import dir_manager
+from Utilities import graph_manager
