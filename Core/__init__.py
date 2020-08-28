@@ -15,6 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from Core.PeakExtractor import PeakExtractor
-from Core.SpectrogramSTFT import STFT
-from Core.FingerprintGenerator import FingerprintGenerator
+from Core.peak_extractor import PeakExtractor
+from Core.spectrogram import STFT
+from Core.fingerprint_generator import FingerprintGenerator
