@@ -1,6 +1,6 @@
 from Utilities import dir_manager
 from Utilities import audio_manager
-from Core import STFT
+from Core import Spectrogram
 from Core import PeakExtractor
 from Core import FingerprintGenerator
 from DataManager import DataManager
@@ -10,7 +10,7 @@ import csv
 # source directory for query audios
 src_dir = "../../../Test_Data/Modified_Audios_12/"
 # an object for computing stft based spectrogram
-stft = STFT(n_fft=1024, hop_length=32, sr=700)
+stft = Spectrogram(n_fft=1024, hop_length=32, sr=700)
 # an object to extract spectral peaks from stft based spectrogram
 peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=75)
 # an object to generate quad based audio fingerprints

@@ -3,28 +3,28 @@
   <component name="ChangeListManager">
     <list default="true" id="384e54e9-e4a0-48dc-9699-9c84c7a4c2af" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/DataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/data_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/RTreeManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/r_tree_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/RawDataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/raw_data_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FingerprintManager/FingerprintManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintManager/fingerprint_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FingerprintManager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintManager/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FingerprintMatching/Match.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintMatching/match.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FingerprintMatching/MatchFingerprints.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintMatching/match_fingerprints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FingerprintMatching/VerifyMatches.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintMatching/verify_matches.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FingerprintMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintMatching/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestConfig/TestConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestConfig/test_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestCore/TestFingerprintGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestCore/TestPeakExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_peak_extractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestCore/TestSpectrogramSTFT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_spectrogram.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerQuery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestDataManager/TestDataManagerStore.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestFingerprintMatching/TestFingerprintMatching.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestFingerprinting/TestFingerprinting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestUtilities/TestUtilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestUtilities/test_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Utilities/AudioManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utilities/audio_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Utilities/DirManager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Utilities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utilities/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/Config_Quad.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConfigManager/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConfigManager/config_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/spectrogram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core/spectrogram.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataManager/data_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager/data_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataManager/r_tree_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataManager/raw_data_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FingerprintManager/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FingerprintManager/fingerprint_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FingerprintMatching/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FingerprintMatching/match.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FingerprintMatching/match_fingerprints.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FingerprintMatching/verify_matches.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestConfig/test_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestCore/test_peak_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_peak_extractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestCore/test_spectrogram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_spectrogram.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,6 +200,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="453" y="132" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598634780302">
+      <screen x="65" y="24" width="1301" height="744" />
+    </state>
+    <state x="453" y="132" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/65.24.1301.744@65.24.1301.744" timestamp="1598634780302" />
     <state x="456" y="236" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1597958128714">
       <screen x="65" y="24" width="1301" height="744" />
     </state>

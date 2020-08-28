@@ -1,1 +1,0 @@
-from FingerprintManager.fingerprint_manager import FingerprintManager

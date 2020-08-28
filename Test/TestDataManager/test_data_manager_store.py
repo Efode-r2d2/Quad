@@ -1,6 +1,6 @@
 from Utilities import dir_manager
 from Utilities import audio_manager
-from Core import STFT
+from Core import Spectrogram
 from Core import PeakExtractor
 from Core import FingerprintGenerator
 from DataManager import DataManager
@@ -10,7 +10,7 @@ src_dir = "../../../Test_Data/Reference_Audios/"
 # retrieving all reference audios under specified source directory
 reference_audios = dir_manager.find_mp3_files(src_dir=src_dir)
 # an object for Short Time Fourier Transform
-stft = STFT(n_fft=1024, hop_length=32, sr=7000)
+stft = Spectrogram(n_fft=1024, hop_length=32, sr=7000)
 # an object to extract spectral peaks from STFT based spectrogram
 peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=75)
 # an object to generate fingerprints using the associtation of four spectral peaks

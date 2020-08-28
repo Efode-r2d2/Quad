@@ -16,5 +16,5 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from Core.peak_extractor import PeakExtractor
-from Core.spectrogram import STFT
+from Core.spectrogram import Spectrogram
 from Core.fingerprint_generator import FingerprintGenerator

@@ -1,6 +1,6 @@
 from Utilities import dir_manager
 from Utilities import audio_manager
-from Core import STFT
+from Core import Spectrogram
 from Core import PeakExtractor
 
 # source directory for reference audio files
@@ -10,7 +10,7 @@ mp3_files = dir_manager.find_mp3_files(src_dir=src_dir)
 # loading 10 seconds time series audio data from one of the reference audio file
 audio_data = audio_manager.load_audio(audio_path=mp3_files[1], sampling_rate=7000, offset=10.0, duration=10.0)
 # computing STFT based spectrogram for a respective time series audio data
-stft = STFT(n_fft=1024, hop_length=32, sr=7000)
+stft = Spectrogram(n_fft=1024, hop_length=32, sr=7000)
 spectrogram = stft.compute_stft_magnitude_in_db(audio_data=audio_data)
 # extracting spectral peaks from STFT based spectrogram
 peak_extractor = PeakExtractor(maximum_filter_height=75, maximum_filter_width=150)

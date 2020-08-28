@@ -1,25 +1,13 @@
-"""
-    < Quad based audio fingerprinting system>
-    Copyright (C) <2019>  <Efriem Desalew Gebie>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""
 import librosa
 import numpy as np
 
 
-class STFT(object):
+class Spectrogram(object):
+    """
+        Short time fourier transform bases transform function.
+        Used to transform a time series audio data into its
+        respective time-frequency representation (Spectrogram).
+    """
 
     def __init__(self, n_fft=1024, hop_length=32, sr=7000):
         """
@@ -56,6 +44,6 @@ class STFT(object):
         :param audio_data:
         :return:
         """
-        stft_magnitude = self.compute_stft_magnitude(audio_data)
-        stft_magnitude_in_db = librosa.amplitude_to_db(stft_magnitude, ref=np.max)
-        return stft_magnitude_in_db
+        spectrogram_magnitude = self.compute_stft_magnitude(audio_data)
+        spectrogram_magnitude_in_db = librosa.amplitude_to_db(spectrogram_magnitude, ref=np.max)
+        return spectrogram_magnitude_in_db

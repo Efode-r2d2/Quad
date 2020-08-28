@@ -1,3 +1,0 @@
-from FingerprintMatching import match_fingerprints
-from FingerprintMatching import verify_matches
-from FingerprintMatching.match import Match

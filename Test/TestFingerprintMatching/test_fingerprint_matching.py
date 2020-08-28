@@ -1,6 +1,6 @@
 from Utilities import dir_manager
 from Utilities import audio_manager
-from Core import STFT
+from Core import Spectrogram
 from Core import PeakExtractor
 from Core import FingerprintGenerator
 from FingerprintMatching import match_fingerprints
@@ -23,7 +23,7 @@ raw_data_index = raw_data_manager.get_shelf_file_index(shelf_path=shelf)
     Instantiate an object for short time fourier transform. This  object computes
     the spectrogram of an audio from its time series representation. 
 '''
-stft = STFT(n_fft=1024, hop_length=32, sr=7000)
+stft = Spectrogram(n_fft=1024, hop_length=32, sr=7000)
 '''
     Instantiating peak extractor object. A peak extractor object will accept
     STFT based spectrogram of an audio and it will return spectral peaks based on

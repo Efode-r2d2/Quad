@@ -63,29 +63,34 @@ def __record_exists__(cursor, title):
         return True
 
 
-def __store_hash__(cursor, hash):
-    cursor.execute("""INSERT INTO Hashes
-                         VALUES (null,?,?,?,?,?,?,?,?)""",
-                   (hash[0], hash[0], hash[1], hash[1], hash[2], hash[2], hash[3], hash[3]))
+def __store_hash__(cursor, hash_value):
+    """Strong hash value into Hashes table."""
+    cursor.execute("""INSERT INTO Hashes VALUES (null,?,?,?,?,?,?,?,?)""",
+                   (hash_value[0], hash_value[0], hash_value[1], hash_value[1],
+                    hash_value[2], hash_value[2], hash_value[3], hash_value[3]))
 
 
-def __radius_nn__(cursor, hash, e=0.01):
+def __radius_nn__(cursor, hash_value, e=0.01):
     """
-    Epsilon (e) neighbor search for a given hash. Matching hash ids
-    can be retrieved from the cursor.
+    Looking for a matching hash values for a given hash value with in a range of e.
     """
     cursor.execute("""SELECT id FROM Hashes
                   WHERE minNewCx >= ? AND maxNewCx <= ?
                     AND minNewCy >= ? AND maxNewCy <= ?
                     AND minNewDx >= ? AND maxNewDx <= ?
                     AND minNewDy >= ? AND maxNewDy <= ?""",
-                   (hash[0] - e, hash[0] + e,
-                    hash[1] - e, hash[1] + e,
-                    hash[2] - e, hash[2] + e,
-                    hash[3] - e, hash[3] + e))
+                   (hash_value[0] - e, hash_value[0] + e,
+                    hash_value[1] - e, hash_value[1] + e,
+                    hash_value[2] - e, hash_value[2] + e,
+                    hash_value[3] - e, hash_value[3] + e))
 
 
 def __store_quad__(cursor, quad, record_id):
+    """
+    Storing raw values of A (Ax,Ay) and B (Bx,By) for each hash.
+    Where the x-component defines the frame number (tempo information) and
+    the y-component defines the pitch (frequency information) value of the respective hash.
+    """
     hash_id = cursor.lastrowid
     values = (hash_id, record_id, int(quad[0]), int(quad[1]), int(quad[2]), int(quad[3]))
     cursor.execute("""INSERT INTO Quads
@@ -101,18 +106,18 @@ def __lookup_quads__(conn, hash_ids):
     return [row[0], row[1], row[2], row[3]], row[4]
 
 
-def __bin_times__(l, binwidth=20, ts=4):
+def __bin_times__(l, bin_width=20, ts=4):
     """
     Takes list of rough offsets and bins them in time increments of
-    binwidth. These offsets are stored in a dictionary of
+    bin width. These offsets are stored in a dictionary of
     {binned time : [list of scale factors]}. Binned time keys with
     less than Ts scale factor values are filtered out.
     """
     d = defaultdict(list)
     for rough_offset in l:
-        div = rough_offset[0] / binwidth
-        binname = int(math.floor(div) * binwidth)
-        d[binname].append((rough_offset[1][0], rough_offset[1][1]))
+        div = rough_offset[0] / bin_width
+        bin_name = int(math.floor(div) * bin_width)
+        d[bin_name].append((rough_offset[1][0], rough_offset[1][1]))
     return {k: v for k, v in d.items() if len(v) >= ts}
 
 
@@ -199,9 +204,8 @@ class DataManager(object):
             cursor = conn.cursor()
             if not __record_exists__(cursor=cursor, title=title):
                 record_id = __store_record__(cursor=cursor, title=title)
-                # __store_peaks__(curosr=cursor, spectral_peaks=spectral_peaks, record_id=record_id)
                 for i in fingerprints:
-                    __store_hash__(cursor=cursor, hash=i[0])
+                    __store_hash__(cursor=cursor, hash_value=i[0])
                     __store_quad__(cursor=cursor, quad=i[1], record_id=record_id)
         conn.commit()
         conn.close()
@@ -235,58 +239,3 @@ class DataManager(object):
         cursor.close()
         conn.close()
         return match_candidates
-
-    def _validate_match(self, spectral_peaks, cursor, match_candidate):
-        """
-        """
-        rPeaks = self._lookup_peak_range(cursor, match_candidate.recordid, match_candidate.offset)
-        vScore = self._verify_peaks(match_candidate, rPeaks, spectral_peaks)
-        return self.Match(self._lookup_record(cursor, match_candidate.recordid), match_candidate.offset, vScore)
-
-    def _lookup_peak_range(self, c, recordid, offset, e=6570):
-        """
-        Queries Peaks table for peaks of given recordid that are within
-        3750 samples (15s) of the estimated offset value.
-        """
-        data = (offset, offset + e, recordid)
-        c.execute("""SELECT X, Y
-                       FROM Peaks
-                      WHERE X >= ? AND X <= ?
-                        AND recordid = ?""", data)
-        return [self.Peak(p[0], p[1]) for p in c.fetchall()]
-
-    def _verify_peaks(self, mc, rPeaks, qPeaks, eX=18, eY=12):
-        """
-        Checks for presence of a given set of reference peaks in the
-        query fingerprint's list of peaks according to time and
-        frequency boundaries (eX and eY). Each reference peak is adjusted
-        according to estimated sFreq/sTime from candidate filtering
-        stage.
-        Returns: validation score (num. valid peaks / total peaks)
-        """
-        validated = 0
-        for rPeak in rPeaks:
-            rPeak = (rPeak.x - mc.offset, rPeak.y)
-            rPeakScaled = self.Peak(rPeak[0] / mc.sFreq, rPeak[1] / mc.sTime)
-            lBound = bisect_left(qPeaks, (rPeakScaled.x - eX, len(qPeaks)))
-            rBound = bisect_right(qPeaks, (rPeakScaled.x + eX, len(qPeaks)))
-            for i in range(lBound, rBound):
-                if not rPeakScaled.y - eY <= qPeaks[i][1] <= rPeakScaled.y + eY:
-                    continue
-                else:
-                    validated += 1
-        if len(rPeaks) == 0:
-            vScore = 0.0
-        else:
-            vScore = (float(validated) / len(rPeaks))
-        return vScore
-
-    def _lookup_record(self, c, recordid):
-        """
-        Returns title of given recordid
-        """
-        c.execute("""SELECT title
-                       FROM Records
-                      WHERE id = ?""", (recordid,))
-        title = c.fetchone()
-        return title[0]
