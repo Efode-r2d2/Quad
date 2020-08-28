@@ -26,8 +26,8 @@ for i in reference_audios:
     # extracting spectral peaks from STFT based spectrogram
     spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
     # generate fingerprints using the association of four spectral peaks
-    audio_fingerprints = fingerprint_generator.__generate_fingerprints__(spectral_peaks=spectral_peaks[0],
-                                                                         spectrogram=spectrogram, n=20)
+    audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0],
+                                                                     spectrogram=spectrogram, n=20)
     # storing fingerprints
     data_manager.__store__(fingerprints=audio_fingerprints, spectral_peaks=spectral_peaks[0], title=audio_title)
     print("Done Fingerprinting ", audio_title)

@@ -34,7 +34,7 @@ for i in reference_audios[0:10]:
     # extracting spectral peaks from respective spectrogram
     spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
     # generating audio fingerprints
-    audio_fingerprints = fingerprint_generator.__generate_fingerprints__(spectral_peaks=spectral_peaks[0])
+    audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0])
     # storing generated fingerprints
     fingerprint_manager.__store_fingerprints__(audio_fingerprints=audio_fingerprints, audio_id=audio_id)
     print(audio_id, " Fingerprinted!")

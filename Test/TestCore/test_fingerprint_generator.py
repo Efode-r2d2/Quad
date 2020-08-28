@@ -18,5 +18,5 @@ peak_extractor = PeakExtractor(maximum_filter_height=75, maximum_filter_width=15
 spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
 # generating audio fingerprints
 fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_center=2, tolerance=0.31)
-audio_fingerprints = fingerprint_generator.__generate_fingerprints__(spectral_peaks=spectral_peaks[0])
+audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0])
 print(audio_fingerprints)
