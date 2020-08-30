@@ -37,7 +37,10 @@ class PeakExtractor(object):
         A method to extract spectral peaks given the spectrogram of an audio.
 
         Parameters:
-            spectrogram (
+            spectrogram (numpy.ndarray): Time-Frequency representation of an audio.
+
+        Returns:
+            List : list of spectral peaks.
         """
         # computing local maximum points with the specified maximum filter dimension
         local_max_values = maximum_filter(input=spectrogram, size=(self.maximum_filter_height,

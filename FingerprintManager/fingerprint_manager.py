@@ -5,19 +5,16 @@ from collections import defaultdict, namedtuple
 
 import numpy as np
 
-"""
-    Creating a database consisting of four tables:
-    1. Hashes Table: an R*Tree based virtual tables used to store hash values
-    extracted using the association of four spectral peaks.
-    2. Records Table: a table used to store required metadata's of a given song. 
-    In this case we only store the title of the song as a metadata. 
-    3. Quads Table: a table used to store raw data associated with each quad.
-    4. Peaks Table: a table used to store raw information's associated with 
-    each spectral peaks
-"""
-
 
 def __create_tables__(conn):
+    """
+    A function to create tables to store hashes(Hashes table), audio  information's (Audios table) and raw data
+    associated with each hash(Quads table).
+
+    Parameters:
+        conn (String): a connection to the database.
+
+    """
     conn.executescript("""
                 CREATE VIRTUAL TABLE
                 IF NOT EXISTS Hashes USING rtree(
@@ -27,47 +24,54 @@ def __create_tables__(conn):
                     minNewDx, maxNewDx,
                     minNewDy, maxNewDy);
                 CREATE TABLE
-                IF NOT EXISTS Records(
+                IF NOT EXISTS Audios(
                     id INTEGER PRIMARY KEY,
-                    title TEXT);
+                    audio_title TEXT);
                 CREATE TABLE
                 IF NOT EXISTS Quads(
-                    hashid INTEGER PRIMARY KEY,
-                    recordid INTEGER,
+                    hash_id INTEGER PRIMARY KEY,
+                    audio_id INTEGER,
                     Ax INTEGER, Ay INTEGER,
                     Bx INTEGER, By INTEGER,
-                    FOREIGN KEY(hashid) REFERENCES Hashes(id),
-                    FOREIGN KEY(recordid) REFERENCES Records(id));
-                CREATE TABLE
-                IF NOT EXISTS Peaks(
-                    recordid INTEGER, X INTEGER, Y INTEGER,
-                    PRIMARY KEY(recordid, X, Y),
-                    FOREIGN KEY(recordid) REFERENCES Records(id));""")
+                    FOREIGN KEY(hash_id) REFERENCES Hashes(id),
+                    FOREIGN KEY(audio_id) REFERENCES Records(id));""")
 
 
-def __store_record__(cursor, title):
-    cursor.execute("""INSERT INTO Records
-                         VALUES (null,?)""", (title,))
+def store_audio(cursor, audio_title):
+    """
+    A function to store an audio record into the database.
+
+    Parameters:
+        cursor : the current cursor of the database.
+        audio_title (String): The title of the audio.
+
+    """
+    cursor.execute("""INSERT INTO Audios
+                         VALUES (null,?)""", (audio_title,))
     return cursor.lastrowid
 
 
-def __record_exists__(cursor, title):
+def audio_exists(cursor, audio_title):
+    """
+    A function to check whether a given audio record exist or not.
+
+    Parameters:
+        cursor : the current cursor of the database.
+        audio_title (String): Title of the audio.
+
+    Returns:
+        boolean: True if the record already exist or False if the record doesn't exist.
+
+    """
     cursor.execute("""SELECT id
-                           FROM Records
-                          WHERE title = ?""", (title,))
+                           FROM Audios
+                          WHERE audio_title = ?""", (audio_title,))
     record_id = cursor.fetchone()
     if record_id is None:
         return False
     else:
-        print("record already exists...")
+        print("Audio already exists...")
         return True
-
-
-def __store_hash__(cursor, hash_value):
-    """Strong hash value into Hashes table."""
-    cursor.execute("""INSERT INTO Hashes VALUES (null,?,?,?,?,?,?,?,?)""",
-                   (hash_value[0], hash_value[0], hash_value[1], hash_value[1],
-                    hash_value[2], hash_value[2], hash_value[3], hash_value[3]))
 
 
 def __radius_nn__(cursor, hash_value, e=0.01):
@@ -85,7 +89,7 @@ def __radius_nn__(cursor, hash_value, e=0.01):
                     hash_value[3] - e, hash_value[3] + e))
 
 
-def __store_quad__(cursor, quad, record_id):
+def store_quads(cursor, quad, record_id):
     """
     Storing raw values of A (Ax,Ay) and B (Bx,By) for each hash.
     Where the x-component defines the frame number (tempo information) and
@@ -184,8 +188,38 @@ def __filter_candidates__(conn, cursor, query_quad, filtered, tolerance=0.31, e_
         filtered[record_id].append((offset, (sTime, sFreq)))
 
 
+def store_hash(cursor, hash_value):
+    """
+    A function to store hashes into a reference fingerprint database.
+
+    Parameters:
+        cursor : the current cursor of the reference fingerprint database.
+        hash_value (tuple) : hash values.
+
+    """
+    cursor.execute("""INSERT INTO Hashes VALUES (null,?,?,?,?,?,?,?,?)""",
+                   (hash_value[0], hash_value[0], hash_value[1], hash_value[1],
+                    hash_value[2], hash_value[2], hash_value[3], hash_value[3]))
+
+
 class FingerprintManager(object):
+    """
+    A class to manager audio fingerprints. This class is aimed at providing interfaces to store audio fingerprints
+    and to query matching audios based on extracted fingerprints.
+
+    Attributes:
+        db_path (String): Path for reference audio fingerprints database.
+
+    """
+
     def __init__(self, db_path):
+        """
+        A constructor method to FingerprintManager class.
+
+        Parameters:
+            db_path (String): Path of reference audio fingerprints database.
+
+        """
         self.db_path = db_path
         with sqlite3.connect(self.db_path) as conn:
             __create_tables__(conn)
@@ -199,18 +233,26 @@ class FingerprintManager(object):
         self.MatchCandidate = namedtuple('MatchCandidate', mcNames)
         self.Match = namedtuple('Match', ['record', 'offset', 'vScore'])
 
-    def __store__(self, fingerprints, title):
+    def store_fingerprints(self, audio_fingerprints, audio_title):
+        """
+        A method to store audion fingerprints.
+
+        Parameters:
+            audio_fingerprints (List): List of audio fingerprints.
+            audio_title (String): Title of the audio.
+
+        """
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            if not __record_exists__(cursor=cursor, title=title):
-                record_id = __store_record__(cursor=cursor, title=title)
-                for i in fingerprints:
-                    __store_hash__(cursor=cursor, hash_value=i[0])
-                    __store_quad__(cursor=cursor, quad=i[1], record_id=record_id)
+            if not audio_exists(cursor=cursor, audio_title=audio_title):
+                record_id = store_audio(cursor=cursor, audio_title=audio_title)
+                for i in audio_fingerprints:
+                    store_hash(cursor=cursor, hash_value=i[0])
+                    store_quads(cursor=cursor, quad=i[1], record_id=record_id)
         conn.commit()
         conn.close()
 
-    def __query__(self, audio_fingerprints):
+    def query_audio(self, audio_fingerprints):
         match_candidates = self.__find_match_candidates__(audio_fingerprints)
         conn = sqlite3.connect(self.db_path)
 

@@ -39,8 +39,8 @@ for t in range(5, 35, 5):
         audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0],
                                                                          spectrogram=spectrogram, number_of_quads_per_second=500)
         # query matches
-        match = data_manager.__query__(audio_fingerprints=audio_fingerprints, spectral_peaks=spectral_peaks[0],
-                                       vThreshold=0.3)
+        match = data_manager.query_audio(audio_fingerprints=audio_fingerprints, spectral_peaks=spectral_peaks[0],
+                                         vThreshold=0.3)
         end = time.time()
 
         result = None
