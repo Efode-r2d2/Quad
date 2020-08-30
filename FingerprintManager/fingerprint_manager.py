@@ -89,14 +89,18 @@ def __radius_nn__(cursor, hash_value, e=0.01):
                     hash_value[3] - e, hash_value[3] + e))
 
 
-def store_quads(cursor, quad, record_id):
+def store_quads(cursor, quad, audio_id):
     """
-    Storing raw values of A (Ax,Ay) and B (Bx,By) for each hash.
-    Where the x-component defines the frame number (tempo information) and
-    the y-component defines the pitch (frequency information) value of the respective hash.
+    A function to store raw data associated with each hash to reference fingerprint database. This data will be used
+    later for filtering and verification purpose.
+
+    Parameters:
+        cursor: the current cursor of the database.
+        quad (tuple): the raw information to be stored into the database.
+        audio_id (int): Id of the audio.
     """
     hash_id = cursor.lastrowid
-    values = (hash_id, record_id, int(quad[0]), int(quad[1]), int(quad[2]), int(quad[3]))
+    values = (hash_id, audio_id, int(quad[0]), int(quad[1]), int(quad[2]), int(quad[3]))
     cursor.execute("""INSERT INTO Quads
                          VALUES (?,?,?,?,?,?)""", values)
 
@@ -248,7 +252,7 @@ class FingerprintManager(object):
                 record_id = store_audio(cursor=cursor, audio_title=audio_title)
                 for i in audio_fingerprints:
                     store_hash(cursor=cursor, hash_value=i[0])
-                    store_quads(cursor=cursor, quad=i[1], record_id=record_id)
+                    store_quads(cursor=cursor, quad=i[1], audio_id=record_id)
         conn.commit()
         conn.close()
 
