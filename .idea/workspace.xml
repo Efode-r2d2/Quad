@@ -4,11 +4,8 @@
     <list default="true" id="384e54e9-e4a0-48dc-9699-9c84c7a4c2af" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/fingerprint_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core/fingerprint_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestCore/test_fingerprint_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manager_store.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestDataManager/test_data_manger_query.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprintMatching/test_fingerprint_matching.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprinting/test_fingerprinting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

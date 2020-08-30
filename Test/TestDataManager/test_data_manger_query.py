@@ -37,7 +37,7 @@ for t in range(5, 35, 5):
         spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
         # generate quad based fingerprints
         audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0],
-                                                                         spectrogram=spectrogram, n=500)
+                                                                         spectrogram=spectrogram, number_of_quads_per_second=500)
         # query matches
         match = data_manager.__query__(audio_fingerprints=audio_fingerprints, spectral_peaks=spectral_peaks[0],
                                        vThreshold=0.3)
