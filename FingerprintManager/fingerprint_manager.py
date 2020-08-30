@@ -74,9 +74,15 @@ def audio_exists(cursor, audio_title):
         return True
 
 
-def __radius_nn__(cursor, hash_value, e=0.01):
+def radius_nn(cursor, hash_value, e=0.01):
     """
-    Looking for a matching hash values for a given hash value with in a range of e.
+    A function to retrieve all the matching hashes with in the range of e.
+
+    Parameters:
+        cursor : The current cursor of the database.
+        hash_value (tuple): A hash extracted from a query audio.
+        e (float): A look up radius for the r-tree.
+
     """
     cursor.execute("""SELECT id FROM Hashes
                   WHERE minNewCx >= ? AND maxNewCx <= ?
@@ -105,16 +111,27 @@ def store_quads(cursor, quad, audio_id):
                          VALUES (?,?,?,?,?,?)""", values)
 
 
-def __lookup_quads__(conn, hash_ids):
+def lookup_quads(conn, hash_id):
+    """
+    A function to retrieve raw data of the reference hash given its hash id.
+
+    Parameters:
+        conn : Connection object to the reference fingerprint database.
+        hash_id (int): ID of reference audio hash.
+
+    Returns:
+        tuple : Raw data of for a given hash ID, the raw data consists of AX,AY,BX and By.
+
+    """
     cursor = conn.cursor()
-    cursor.execute("""SELECT Ax,Ay,Bx,By,recordid FROM Quads
-                          WHERE hashid=?""", hash_ids)
+    cursor.execute("""SELECT Ax,Ay,Bx,By,audio_id FROM Quads
+                          WHERE hash_id=?""", hash_id)
     row = cursor.fetchone()
     cursor.close()
     return [row[0], row[1], row[2], row[3]], row[4]
 
 
-def __bin_times__(l, bin_width=20, ts=4):
+def bin_times(l, bin_width=20, ts=4):
     """
     Takes list of rough offsets and bins them in time increments of
     bin width. These offsets are stored in a dictionary of
@@ -167,9 +184,9 @@ def __store_peaks__(curosr, spectral_peaks, record_id):
                      VALUES (?,?,?)""", (record_id, int(i[0]), int(i[1])))
 
 
-def __filter_candidates__(conn, cursor, query_quad, filtered, tolerance=0.31, e_fine=1.8):
+def filter_candidates(conn, cursor, query_quad, filtered, tolerance=0.31, e_fine=1.8):
     for hash_ids in cursor:
-        reference_quad, record_id = __lookup_quads__(conn, hash_ids)
+        reference_quad, audio_id = lookup_quads(conn, hash_ids)
         # Rough pitch coherence:
         #   1/(1+e) <= queAy/canAy <= 1/(1-e)
         if not 1 / (1 + tolerance) <= query_quad[1] / reference_quad[1] <= 1 / (1 - tolerance):
@@ -189,7 +206,7 @@ def __filter_candidates__(conn, cursor, query_quad, filtered, tolerance=0.31, e_
         if not abs(query_quad[1] - (reference_quad[1] * sFreq)) <= e_fine:
             continue
         offset = reference_quad[0] - (query_quad[0] * sTime)
-        filtered[record_id].append((offset, (sTime, sFreq)))
+        filtered[audio_id].append((offset, (sTime, sFreq)))
 
 
 def store_hash(cursor, hash_value):
@@ -257,7 +274,7 @@ class FingerprintManager(object):
         conn.close()
 
     def query_audio(self, audio_fingerprints):
-        match_candidates = self.__find_match_candidates__(audio_fingerprints)
+        match_candidates = self.__find_match_candidates(audio_fingerprints)
         conn = sqlite3.connect(self.db_path)
 
         cursor = conn.cursor()
@@ -269,19 +286,17 @@ class FingerprintManager(object):
         else:
             return "No Match", 0
 
-    def __find_match_candidates__(self, audio_fingerprints):
+    def __find_match_candidates(self, audio_fingerprints):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         filtered = defaultdict(list)
         for i in audio_fingerprints:
-            __radius_nn__(cursor, i[0])
+            radius_nn(cursor, i[0])
             with np.errstate(divide='ignore', invalid='ignore'):
-                __filter_candidates__(conn, cursor, i[1], filtered)
-        binned = {k: __bin_times__(v) for k, v in filtered.items()}
+                filter_candidates(conn, cursor, i[1], filtered)
+        binned = {k: bin_times(v) for k, v in filtered.items()}
         results = {k: __scales__(v)
                    for k, v in binned.items() if len(v) >= 4}
-        match_candidates = [self.MatchCandidate(k, a[0], a[1], a[2][0], a[2][1])
-                            for k, v in results.items() for a in v]
         cursor.close()
         conn.close()
-        return match_candidates
+        return results
