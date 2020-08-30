@@ -54,15 +54,14 @@ class FingerprintGenerator(object):
 
         """
         # extracting valid quads.
-        valid_quads = self.__valid_quads(spectral_peaks=spectral_peaks)
+        valid_quads = self.__validate_quads(spectral_peaks=spectral_peaks)
         # strong quads per second audio.
         strong_quads = self.__strongest_quads(spectrogram=spectrogram, quads=valid_quads)
         # audio fingerprints extracted using the association of four spectral peaks.
         audio_fingerprints = self.__hash_quads(strong_quads=strong_quads)
-
         return audio_fingerprints
 
-    def __valid_quads(self, spectral_peaks):
+    def __validate_quads(self, spectral_peaks):
         """
         A method to extract valid quads per root peak.
 
@@ -86,7 +85,13 @@ class FingerprintGenerator(object):
                 c = j[0]
                 d = j[1]
                 b = j[2]
-                if a[0] < c[0] < d[0] < b[0] and a[1] < c[1] < d[1] < b[1]:
+                """
+                Checking for a conditions:
+                    Ax<Cx<=DX<=Bx,
+                    Ay<By, Ay<Cy and
+                    Dy<=By
+                """
+                if a[1] < c[1] < b[1] and a[1] < d[1] <= b[1]:
                     valid_quads.append((a,) + j)
         return valid_quads
 
@@ -162,3 +167,4 @@ class FingerprintGenerator(object):
             # filtering fingerprints based on the
             if cx_new > (self.min_frame_number / self.max_frame_number) - 0.02:
                 audio_fingerprints.append([[cx_new, cy_new, dx_new, dy_new], [a[0], a[1], b[0], b[1]]])
+        return audio_fingerprints

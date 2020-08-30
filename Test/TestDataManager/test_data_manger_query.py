@@ -1,6 +1,6 @@
 from Utilities import dir_manager
 from Utilities import audio_manager
-from Core import Spectrogram
+from Core import STFT
 from Core import PeakExtractor
 from Core import FingerprintGenerator
 from DataManager import DataManager
@@ -10,7 +10,7 @@ import csv
 # source directory for query audios
 src_dir = "../../../Test_Data/Modified_Audios_12/"
 # an object for computing stft based spectrogram
-stft = Spectrogram(n_fft=1024, hop_length=32, sr=700)
+stft = STFT(n_fft=1024, hop_length=32, sr=700)
 # an object to extract spectral peaks from stft based spectrogram
 peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=75)
 # an object to generate quad based audio fingerprints
@@ -32,9 +32,9 @@ for t in range(5, 35, 5):
                                               offset=10.0,
                                               duration=t)
         # computing stft based spectrogram of time series audio data
-        spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
+        spectrogram = stft.compute_spectrogram_magnitude_in_db(audio_data=audio_data)
         # extracting spectral peaks from STFT based spectrogram
-        spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
+        spectral_peaks = peak_extractor.spectral_peaks(spectrogram=spectrogram)
         # generate quad based fingerprints
         audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0],
                                                                          spectrogram=spectrogram, number_of_quads_per_second=500)

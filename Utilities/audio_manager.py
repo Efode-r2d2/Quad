@@ -9,8 +9,8 @@ def load_audio(audio_path, sr=7000, offset=None, duration=None):
     Parameters:
         audio_path (String): relative/absolute path of a give audio.
         sr (int): sampling rate
-        offset (int): an offset in seconds where reading the audio starts.
-        duration (int): duration of reading (in seconds).
+        offset (float): an offset in seconds where reading the audio starts.
+        duration (float): duration of reading (in seconds).
 
     Returns:
         numpy.ndarray: monophonic time series representation of the given audio.

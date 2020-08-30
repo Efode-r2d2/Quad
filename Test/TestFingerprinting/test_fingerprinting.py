@@ -1,40 +1,38 @@
 from Utilities import dir_manager
 from Utilities import audio_manager
-from Core import Spectrogram
+from Core import STFT
 from Core import PeakExtractor
 from Core import FingerprintGenerator
 from FingerprintManager import FingerprintManager
 
-# r tree path
-r_tree = "../../../Hashes/Quad/Test_1"
-# raw_data_path
-shelf = "../../../Raw_Data/Quad/Test_1"
-# config file path
-config = "../../Config/Config_Quad.ini"
-# source directory for reference audio files
+# defining constants
+SAMPLING_RATE = 7000
+
+# a source directory for all reference audios
 src_dir = "../../../Test_Data/Reference_Audios"
 # retrieving all reference audios under specified source directory
 reference_audios = dir_manager.find_mp3_files(src_dir=src_dir)
 # Declaring an object for Short Time Fourier Transform (STFT)
-stft = Spectrogram(n_fft=1024, hop_length=32, sr=7000)
+stft = STFT(n_fft=1024, hop_length=32, sr=7000)
 # Spectral peak extractor object
 peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=75)
 # Fingerprint generator object
-fingerprint_generator = FingerprintGenerator(target_zone_width=1, target_zone_center=2, tolerance=0.0)
-# Fingerprint Manager Object
-fingerprint_manager = FingerprintManager(r_tree=r_tree, shelf=shelf, config=config)
-# fingerprinting all reference audios
-for i in reference_audios[0:10]:
-    # audio_id
-    audio_id = i.split("/")[5].split(".")[0]
-    # reading time series audio data sampled at 7KHz
-    audio_data = audio_manager.load_audio(audio_path=i, sr=7000)
-    # computing stft based spectrogram
-    spectrogram = stft.spectrogram_magnitude_in_db(audio_data=audio_data)
-    # extracting spectral peaks from respective spectrogram
-    spectral_peaks = peak_extractor.extract_spectral_peaks_2(spectrogram=spectrogram)
-    # generating audio fingerprints
-    audio_fingerprints = fingerprint_generator.generate_fingerprints(spectral_peaks=spectral_peaks[0])
-    # storing generated fingerprints
-    fingerprint_manager.__store_fingerprints__(audio_fingerprints=audio_fingerprints, audio_id=audio_id)
-    print(audio_id, " Fingerprinted!")
+fingerprint_generator = FingerprintGenerator(
+    frames_per_second=219,
+    target_zone_width=1,
+    target_zone_center=2,
+    number_of_quads_per_second=9,
+    tolerance=0.31)
+# reading 10 second audio data sampled at 7KHz
+audio_data = audio_manager.load_audio(audio_path=reference_audios[0], sr=SAMPLING_RATE, offset=10.0, duration=10.0)
+# computing spectrogram of times series audio data.
+spectrogram = stft.compute_spectrogram_magnitude_in_db(audio_data=audio_data)
+print(spectrogram)
+# extracting spectral peaks from the spectrogram of the audio.
+spectral_peaks = peak_extractor.extract_spectral_peaks(spectrogram=spectrogram)
+print(spectral_peaks)
+# generate audio fingerprints
+audio_fingerprints = fingerprint_generator.generate_fingerprints(
+    spectral_peaks=spectral_peaks[0],
+    spectrogram=spectrogram)
+print(audio_fingerprints)

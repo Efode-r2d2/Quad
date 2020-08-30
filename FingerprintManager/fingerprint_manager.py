@@ -1,9 +1,9 @@
 import math
-import sqlite3
-import numpy as np
-from bisect import bisect_left, bisect_right
-from collections import defaultdict, namedtuple
 import operator
+import sqlite3
+from collections import defaultdict, namedtuple
+
+import numpy as np
 
 """
     Creating a database consisting of four tables:
@@ -184,7 +184,7 @@ def __filter_candidates__(conn, cursor, query_quad, filtered, tolerance=0.31, e_
         filtered[record_id].append((offset, (sTime, sFreq)))
 
 
-class DataManager(object):
+class FingerprintManager(object):
     def __init__(self, db_path):
         self.db_path = db_path
         with sqlite3.connect(self.db_path) as conn:
@@ -199,7 +199,7 @@ class DataManager(object):
         self.MatchCandidate = namedtuple('MatchCandidate', mcNames)
         self.Match = namedtuple('Match', ['record', 'offset', 'vScore'])
 
-    def __store__(self, fingerprints, spectral_peaks, title):
+    def __store__(self, fingerprints, title):
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             if not __record_exists__(cursor=cursor, title=title):
@@ -210,7 +210,7 @@ class DataManager(object):
         conn.commit()
         conn.close()
 
-    def __query__(self, audio_fingerprints, spectral_peaks, vThreshold=0.5):
+    def __query__(self, audio_fingerprints):
         match_candidates = self.__find_match_candidates__(audio_fingerprints)
         conn = sqlite3.connect(self.db_path)
 
