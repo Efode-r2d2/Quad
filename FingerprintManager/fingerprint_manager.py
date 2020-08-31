@@ -146,7 +146,7 @@ def bin_times(l, bin_width=20, ts=4):
     return {k: v for k, v in d.items() if len(v) >= ts}
 
 
-def __outlier_removal__(d):
+def outlier_removal(d):
     """
     Calculates mean/std. dev. for sTime/sFreq values,
     then removes any outliers (defined as mean +/- 2 * stdv).
@@ -160,7 +160,7 @@ def __outlier_removal__(d):
     return d
 
 
-def __scales__(d):
+def scales(d):
     """
     Receives dictionary of {binned time : [scale factors]}
     Performs variance-based outlier removal on these scales. If 4 or more
@@ -168,20 +168,11 @@ def __scales__(d):
     [(rough offset, num matches, scale averages)]] is created. This result
     is sorted by # of matches in descending order and returned.
     """
-    o_rm = {k: __outlier_removal__(v) for k, v in d.items()}
+    o_rm = {k: outlier_removal(v) for k, v in d.items()}
     res = [(i[0], len(i[1]), np.mean(i[1], axis=0))
            for i in o_rm.items() if len(i[1]) >= 4]
     sorted_mc = sorted(res, key=operator.itemgetter(1), reverse=True)
     return sorted_mc
-
-
-def __store_peaks__(curosr, spectral_peaks, record_id):
-    """
-    Stores peaks from reference fingerprint
-    """
-    for i in spectral_peaks:
-        curosr.execute("""INSERT INTO Peaks
-                     VALUES (?,?,?)""", (record_id, int(i[0]), int(i[1])))
 
 
 def filter_candidates(conn, cursor, query_quad, filtered, tolerance=0.31, e_fine=1.8):
@@ -221,6 +212,17 @@ def store_hash(cursor, hash_value):
     cursor.execute("""INSERT INTO Hashes VALUES (null,?,?,?,?,?,?,?,?)""",
                    (hash_value[0], hash_value[0], hash_value[1], hash_value[1],
                     hash_value[2], hash_value[2], hash_value[3], hash_value[3]))
+
+
+def lookup_record(cursor, audio_id):
+    """
+    Returns title of given recordid
+    """
+    cursor.execute("""SELECT audio_title
+                   FROM Audios
+                  WHERE id = ?""", (audio_id,))
+    title = cursor.fetchone()
+    return title[0]
 
 
 class FingerprintManager(object):
@@ -279,7 +281,7 @@ class FingerprintManager(object):
 
         cursor = conn.cursor()
         if len(match_candidates) > 0:
-            audio_id = self._lookup_record(c=cursor, recordid=match_candidates[0].recordid)
+            audio_id = lookup_record(cursor=cursor, audio_id=match_candidates[0].recordid)
             cursor.close()
             conn.close()
             return audio_id, match_candidates[0].num_matches
@@ -295,7 +297,7 @@ class FingerprintManager(object):
             with np.errstate(divide='ignore', invalid='ignore'):
                 filter_candidates(conn, cursor, i[1], filtered)
         binned = {k: bin_times(v) for k, v in filtered.items()}
-        results = {k: __scales__(v)
+        results = {k: scales(v)
                    for k, v in binned.items() if len(v) >= 4}
         cursor.close()
         conn.close()

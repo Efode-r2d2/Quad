@@ -22,7 +22,7 @@ fingerprint_generator = FingerprintGenerator(
     tolerance=0.31
 )
 # Data manager object
-fingerprint_manager = FingerprintManager("../../../Databases/Quads_Test.db")
+fingerprint_manager = FingerprintManager(db_path="../../../Databases/Quads_Test.db")
 for i in reference_audios[0:2]:
     audio_title = i.split("/")[5].split(".")[0]
     # loading time series audio data of one of reference audio
