@@ -146,35 +146,6 @@ def bin_times(l, bin_width=20, ts=4):
     return {k: v for k, v in d.items() if len(v) >= ts}
 
 
-def outlier_removal(d):
-    """
-    Calculates mean/std. dev. for sTime/sFreq values,
-    then removes any outliers (defined as mean +/- 2 * stdv).
-    Returns list of final means.
-    """
-    means = np.mean(d, axis=0)
-    stds = np.std(d, axis=0)
-    d = [v for v in d if
-         (means[0] - 2 * stds[0] <= v[0] <= means[0] + 2 * stds[0]) and
-         (means[1] - 2 * stds[1] <= v[1] <= means[1] + 2 * stds[1])]
-    return d
-
-
-def scales(d):
-    """
-    Receives dictionary of {binned time : [scale factors]}
-    Performs variance-based outlier removal on these scales. If 4 or more
-    matches remain after outliers are removed, a list with form
-    [(rough offset, num matches, scale averages)]] is created. This result
-    is sorted by # of matches in descending order and returned.
-    """
-    o_rm = {k: outlier_removal(v) for k, v in d.items()}
-    res = [(i[0], len(i[1]), np.mean(i[1], axis=0))
-           for i in o_rm.items() if len(i[1]) >= 4]
-    sorted_mc = sorted(res, key=operator.itemgetter(1), reverse=True)
-    return sorted_mc
-
-
 def filter_candidates(conn, cursor, query_quad, filtered, tolerance=0.31, e_fine=1.8):
     for hash_ids in cursor:
         reference_quad, audio_id = lookup_quads(conn, hash_ids)
