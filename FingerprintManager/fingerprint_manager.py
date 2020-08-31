@@ -280,11 +280,12 @@ class FingerprintManager(object):
         conn = sqlite3.connect(self.db_path)
 
         cursor = conn.cursor()
-        if len(match_candidates) > 0:
-            audio_id = lookup_record(cursor=cursor, audio_id=match_candidates[0].recordid)
+        print(match_candidates)
+        if len(match_candidates) > 0 and match_candidates[0][2] > 5:
+            audio_id = lookup_record(cursor=cursor, audio_id=match_candidates[0][0])
             cursor.close()
             conn.close()
-            return audio_id, match_candidates[0].num_matches
+            return audio_id, match_candidates[0][2]
         else:
             return "No Match", 0
 
@@ -297,8 +298,11 @@ class FingerprintManager(object):
             with np.errstate(divide='ignore', invalid='ignore'):
                 filter_candidates(conn, cursor, i[1], filtered)
         binned = {k: bin_times(v) for k, v in filtered.items()}
-        results = {k: scales(v)
-                   for k, v in binned.items() if len(v) >= 4}
+        results = list()
+        for k, v in binned.items():
+            for j, m in v.items():
+                results.append([k, j, len(m)])
+        sorted_results = sorted(results, key=operator.itemgetter(2), reverse=True)
         cursor.close()
         conn.close()
-        return results
+        return sorted_results

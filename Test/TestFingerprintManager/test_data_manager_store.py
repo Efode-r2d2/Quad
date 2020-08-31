@@ -16,14 +16,14 @@ peak_extractor = PeakExtractor(maximum_filter_width=150, maximum_filter_height=7
 # an object to generate fingerprints using the associtation of four spectral peaks
 fingerprint_generator = FingerprintGenerator(
     frames_per_second=219,
-    target_zone_width=1,
-    target_zone_center=2,
+    target_zone_width=2,
+    target_zone_center=4,
     number_of_quads_per_second=9,
-    tolerance=0.31
+    tolerance=0.0
 )
 # Data manager object
 fingerprint_manager = FingerprintManager(db_path="../../../Databases/Quads_Test.db")
-for i in reference_audios[0:2]:
+for i in reference_audios[2:4]:
     audio_title = i.split("/")[5].split(".")[0]
     # loading time series audio data of one of reference audio
     audio_data = audio_manager.load_audio(audio_path=i, sr=7000)
