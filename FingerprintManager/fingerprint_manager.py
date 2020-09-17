@@ -1,7 +1,8 @@
 import math
 import operator
 import sqlite3
-from collections import defaultdict, namedtuple
+from bisect import bisect_left, bisect_right
+from collections import defaultdict
 
 import numpy as np
 
@@ -34,7 +35,12 @@ def __create_tables__(conn):
                     Ax INTEGER, Ay INTEGER,
                     Bx INTEGER, By INTEGER,
                     FOREIGN KEY(hash_id) REFERENCES Hashes(id),
-                    FOREIGN KEY(audio_id) REFERENCES Records(id));""")
+                    FOREIGN KEY(audio_id) REFERENCES Audios(id));
+                CREATE TABLE
+                IF NOT EXISTS Peaks(
+                    audio_id INTEGER, Px INTEGER, Py INTEGER,
+                    PRIMARY KEY(audio_id, Px, Py),
+                    FOREIGN KEY(audio_id) REFERENCES Audios(id));""")
 
 
 def store_audio(cursor, audio_title):
@@ -95,6 +101,28 @@ def radius_nn(cursor, hash_value, e=0.01):
                     hash_value[3] - e, hash_value[3] + e))
 
 
+def find_hash(cursor, hash_value, e=0.01):
+    """
+    A function to retrieve all the matching hashes with in the range of e.
+
+    Parameters:
+        cursor : The current cursor of the database.
+        hash_value (tuple): A hash extracted from a query audio.
+        e (float): A look up radius for the r-tree.
+
+    """
+    cursor.execute("""SELECT Quads.Ax,Quads.Ay,Quads.Bx,Quads.By,Quads.audio_id FROM Quads INNER JOIN Hashes
+                    ON Quads.hash_id = Hashes.id
+                  WHERE Hashes.minNewCx >= ? AND Hashes.maxNewCx <= ?
+                    AND Hashes.minNewCy >= ? AND Hashes.maxNewCy <= ?
+                    AND Hashes.minNewDx >= ? AND Hashes.maxNewDx <= ?
+                    AND Hashes.minNewDy >= ? AND Hashes.maxNewDy <= ?""",
+                   (hash_value[0] - e, hash_value[0] + e,
+                    hash_value[1] - e, hash_value[1] + e,
+                    hash_value[2] - e, hash_value[2] + e,
+                    hash_value[3] - e, hash_value[3] + e))
+
+
 def store_quads(cursor, quad, audio_id):
     """
     A function to store raw data associated with each hash to reference fingerprint database. This data will be used
@@ -146,9 +174,8 @@ def bin_times(l, bin_width=20, ts=4):
     return {k: v for k, v in d.items() if len(v) >= ts}
 
 
-def filter_candidates(conn, cursor, query_quad, filtered, tolerance=0.31, e_fine=1.8):
-    for hash_ids in cursor:
-        reference_quad, audio_id = lookup_quads(conn, hash_ids)
+def filter_candidates(cursor, query_quad, filtered, tolerance=0.31, e_fine=1.8):
+    for reference_quad in cursor:
         # Rough pitch coherence:
         #   1/(1+e) <= queAy/canAy <= 1/(1-e)
         if not 1 / (1 + tolerance) <= query_quad[1] / reference_quad[1] <= 1 / (1 - tolerance):
@@ -167,8 +194,8 @@ def filter_candidates(conn, cursor, query_quad, filtered, tolerance=0.31, e_fine
         #   |queAy-canAy*sFreq| <= eFine
         if not abs(query_quad[1] - (reference_quad[1] * sFreq)) <= e_fine:
             continue
-        offset = reference_quad[0] - (query_quad[0] * sTime)
-        filtered[audio_id].append((offset, (sTime, sFreq)))
+        offset = reference_quad[0] - (query_quad[0] / sTime)
+        filtered[reference_quad[4]].append((offset, (sTime, sFreq)))
 
 
 def store_hash(cursor, hash_value):
@@ -196,6 +223,67 @@ def lookup_record(cursor, audio_id):
     return title[0]
 
 
+def outlier_removal(binned_item, results):
+    means = np.mean(binned_item[3], axis=0)
+    stds = np.std(binned_item[3], axis=0)
+    items = [v for v in binned_item[3] if
+             (means[0] - 2 * stds[0] <= v[0] <= means[0] + 2 * stds[0]) and
+             (means[1] - 2 * stds[1] <= v[1] <= means[1] + 2 * stds[1])]
+    results.append([binned_item[0], binned_item[1], means[0], means[1], len(items)])
+
+
+def store_peaks(cursor, spectral_peaks, audio_id):
+    """
+    Store spectral peaks extracted from reference audios.
+
+    Parameters:
+        cursor : the current cursor of the database.
+        spectral_peaks (List) : list of spectral peaks extracted from the reference audio.
+        audio_id (int): id of the audio.
+
+    """
+    for i in spectral_peaks:
+        cursor.execute("""INSERT INTO Peaks
+                     VALUES (?,?,?)""", (audio_id, int(i[0]), int(i[1])))
+
+
+def lookup_peak_range(cursor, audio_id, offset, e=3750):
+    """
+    Queries Peaks table for peaks of given recordid that are within
+    3750 samples (15s) of the estimated offset value.
+    """
+    data = (offset, offset + e, audio_id)
+    cursor.execute("""SELECT Px, Py
+                   FROM Peaks
+                  WHERE Px >= ? AND Px <= ?
+                    AND audio_id = ?""", data)
+    return [p for p in cursor.fetchall()]
+
+
+def verify_peaks(match, reference_peaks, query_peaks, eX=18, eY=12):
+    """
+    Checks for presence of a given set of reference peaks in the
+    query fingerprint's list of peaks according to time and
+    frequency boundaries (eX and eY). Each reference peak is adjusted
+    according to estimated sFreq/sTime from candidate filtering
+    stage.
+    Returns: validation score (num. valid peaks / total peaks)
+    """
+    validated = 0
+    for i in reference_peaks:
+        reference_peak = (i[0] - match[1], i[1])
+        reference_peak_scaled = (reference_peak[0] * match[2], reference_peak[1] * match[3])
+        lBound = bisect_left(query_peaks, (reference_peak_scaled[0] - eX, None))
+        rBound = bisect_right(query_peaks, (reference_peak_scaled[0] + eX, None))
+        for j in range(lBound, rBound):
+            if not reference_peak_scaled[1] - eY <= query_peaks[j][1] <= reference_peak_scaled[1] + eY:
+                continue
+            else:
+                validated += 1
+    vScore = (float(validated) / len(reference_peaks))
+    return vScore
+
+
 class FingerprintManager(object):
     """
     A class to manager audio fingerprints. This class is aimed at providing interfaces to store audio fingerprints
@@ -217,63 +305,68 @@ class FingerprintManager(object):
         self.db_path = db_path
         with sqlite3.connect(self.db_path) as conn:
             __create_tables__(conn)
-        self._create_named_tuples()
         conn.close()
 
-    def _create_named_tuples(self):
-        self.Peak = namedtuple('Peak', ['x', 'y'])
-        self.Quad = namedtuple('Quad', ['A', 'C', 'D', 'B'])
-        mcNames = ['recordid', 'offset', 'num_matches', 'sTime', 'sFreq']
-        self.MatchCandidate = namedtuple('MatchCandidate', mcNames)
-        self.Match = namedtuple('Match', ['record', 'offset', 'vScore'])
-
-    def store_fingerprints(self, audio_fingerprints, audio_title):
+    def store_fingerprints(self, audio_fingerprints, spectral_peaks, audio_title):
         """
         A method to store audion fingerprints.
 
         Parameters:
             audio_fingerprints (List): List of audio fingerprints.
+            spectral_peaks (List): List of spectral peaks extracted from spectrogram of the audio.
             audio_title (String): Title of the audio.
 
         """
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             if not audio_exists(cursor=cursor, audio_title=audio_title):
-                record_id = store_audio(cursor=cursor, audio_title=audio_title)
+                audio_id = store_audio(cursor=cursor, audio_title=audio_title)
+                store_peaks(cursor=cursor, spectral_peaks=spectral_peaks, audio_id=audio_id)
                 for i in audio_fingerprints:
                     store_hash(cursor=cursor, hash_value=i[0])
-                    store_quads(cursor=cursor, quad=i[1], audio_id=record_id)
+                    store_quads(cursor=cursor, quad=i[1], audio_id=audio_id)
         conn.commit()
         conn.close()
 
-    def query_audio(self, audio_fingerprints):
-        match_candidates = self.__find_match_candidates(audio_fingerprints)
+    def query_audio(self, audio_fingerprints, query_peaks):
+        match_candidates = self.find_matches(audio_fingerprints)
         conn = sqlite3.connect(self.db_path)
-
         cursor = conn.cursor()
-        print(match_candidates)
-        if len(match_candidates) > 0 and match_candidates[0][2] > 5:
-            audio_id = lookup_record(cursor=cursor, audio_id=match_candidates[0][0])
-            cursor.close()
-            conn.close()
-            return audio_id, match_candidates[0][2]
+        if len(match_candidates) > 0:
+            reference_peaks = lookup_peak_range(cursor=cursor, audio_id=match_candidates[0][0],
+                                                offset=match_candidates[0][1])
+
+            v_score = verify_peaks(match=match_candidates[0], reference_peaks=reference_peaks,
+                                   query_peaks=query_peaks)
+            print(match_candidates[0][0], match_candidates[0][1], len(reference_peaks), v_score)
+            if v_score > 0.1:
+                audio_title = lookup_record(cursor=cursor, audio_id=match_candidates[0][0])
+                cursor.close()
+                conn.close()
+                return audio_title, match_candidates[0][2], match_candidates[0][1]
+            else:
+                return "No Match", 0
         else:
             return "No Match", 0
 
-    def __find_match_candidates(self, audio_fingerprints):
+    def find_matches(self, audio_fingerprints):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         filtered = defaultdict(list)
         for i in audio_fingerprints:
-            radius_nn(cursor, i[0])
+            find_hash(cursor=cursor, hash_value=i[0])
             with np.errstate(divide='ignore', invalid='ignore'):
-                filter_candidates(conn, cursor, i[1], filtered)
+                filter_candidates(cursor=cursor, query_quad=i[1], filtered=filtered)
         binned = {k: bin_times(v) for k, v in filtered.items()}
         results = list()
+        binned_items = list()
         for k, v in binned.items():
             for j, m in v.items():
-                results.append([k, j, len(m)])
-        sorted_results = sorted(results, key=operator.itemgetter(2), reverse=True)
+                # print(v)
+                binned_items.append([k, j, len(m), m])
+        for i in binned_items:
+            outlier_removal(binned_item=i, results=results)
+        sorted_results = sorted(results, key=operator.itemgetter(4), reverse=True)
         cursor.close()
         conn.close()
         return sorted_results

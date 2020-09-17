@@ -51,6 +51,7 @@ class STFT(object):
 
         Returns:
             numpy.ndarray: Magnitude of spectrogram of a give audio data.
+
         """
         spectrogram = self.__compute_spectrogram(audio_data)
         spectrogram_magnitude = np.abs(spectrogram)
@@ -65,6 +66,7 @@ class STFT(object):
 
         Returns:
             numpy.ndarray: magnitude of spectrogram of an audio in db.
+
         """
         spectrogram_magnitude = self.__compute_spectrogram_magnitude(audio_data)
         spectrogram_magnitude_in_db = librosa.amplitude_to_db(spectrogram_magnitude, ref=np.max)
