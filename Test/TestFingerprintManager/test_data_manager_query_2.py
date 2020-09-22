@@ -7,7 +7,7 @@ from FingerprintManager import FingerprintManager
 import time
 
 # source directory for query audios
-src_dir = "../../../Test_Data/Modified_Audios_9/White_Noise/-5/"
+src_dir = "../../../Test_Data/Query_Audios/Pitch_Shifted/120/"
 # retrieving all query audios under specified source directory
 query_audios = dir_manager.find_wav_files(src_dir=src_dir)
 # STFT based spectrogram object

@@ -339,7 +339,7 @@ class FingerprintManager(object):
             v_score = verify_peaks(match=match_candidates[0], reference_peaks=reference_peaks,
                                    query_peaks=query_peaks)
             print(match_candidates[0][0], match_candidates[0][1], len(reference_peaks), v_score)
-            if v_score > 0.1:
+            if v_score > 0.2:
                 audio_title = lookup_record(cursor=cursor, audio_id=match_candidates[0][0])
                 cursor.close()
                 conn.close()

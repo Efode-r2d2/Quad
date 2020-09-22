@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="384e54e9-e4a0-48dc-9699-9c84c7a4c2af" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Test/Experiments/time_stretching.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/stft.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core/stft.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FingerprintManager/fingerprint_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/FingerprintManager/fingerprint_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/TestFingerprintManager/test_data_manager_query_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprintManager/test_data_manager_query_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/TestFingerprintManager/test_data_manager_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/TestFingerprintManager/test_data_manager_store.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +32,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
-  <component name="RunManager" selected="Python.test_data_manager_store (1)">
+  <component name="RunManager" selected="Python.test_data_manager_query_2">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Quad" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -162,8 +161,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test_data_manager_store (1)" />
         <item itemvalue="Python.test_data_manager_query_2" />
+        <item itemvalue="Python.test_data_manager_store (1)" />
         <item itemvalue="Python.test_fingerprinting" />
         <item itemvalue="Python.test_spectrogram" />
         <item itemvalue="Python.stft" />
@@ -194,22 +193,22 @@
       <screen x="65" y="24" width="1301" height="744" />
     </state>
     <state x="456" y="236" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/65.24.1301.744@65.24.1301.744" timestamp="1597958128714" />
-    <state width="1278" height="281" key="GridCell.Tab.0.bottom" timestamp="1599530423831">
+    <state width="1278" height="281" key="GridCell.Tab.0.bottom" timestamp="1600545467090">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="281" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1599530423831" />
-    <state width="1278" height="281" key="GridCell.Tab.0.center" timestamp="1599530423830">
+    <state width="1278" height="281" key="GridCell.Tab.0.bottom/65.24.1301.744@65.24.1301.744" timestamp="1600545467090" />
+    <state width="1278" height="281" key="GridCell.Tab.0.center" timestamp="1600545467088">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="281" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1599530423830" />
-    <state width="1278" height="281" key="GridCell.Tab.0.left" timestamp="1599530423829">
+    <state width="1278" height="281" key="GridCell.Tab.0.center/65.24.1301.744@65.24.1301.744" timestamp="1600545467088" />
+    <state width="1278" height="281" key="GridCell.Tab.0.left" timestamp="1600545467086">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="281" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1599530423829" />
-    <state width="1278" height="281" key="GridCell.Tab.0.right" timestamp="1599530423830">
+    <state width="1278" height="281" key="GridCell.Tab.0.left/65.24.1301.744@65.24.1301.744" timestamp="1600545467086" />
+    <state width="1278" height="281" key="GridCell.Tab.0.right" timestamp="1600545467089">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
-    <state width="1278" height="281" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1599530423830" />
+    <state width="1278" height="281" key="GridCell.Tab.0.right/65.24.1301.744@65.24.1301.744" timestamp="1600545467089" />
     <state x="406" y="121" width="618" height="522" key="find.popup" timestamp="1597770905928">
       <screen x="65" y="24" width="1301" height="744" />
     </state>
